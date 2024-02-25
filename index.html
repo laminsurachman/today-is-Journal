@@ -3,17 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet" />
     <title>Today I lerning</title>
   </head>
   
   <body>
-    <header>
+    <header class="header">
       <img src="./logo.png" alt="logo" height="68" width="68" />
       <h1>Today I Learned</h1>
       <button>Share a fact</button>
     </header>
-    <form>
+    <form class="fact-form">
       <input type="text" placeholder="Share a fact with the world" />
       <span>200</span>
       <input type="text" placeholder="Trustyworthy spurce ...." />
@@ -24,7 +27,7 @@
         <option value="finance">Finance</option>
       </select>
       <button>Post</button>
-    </form>
+    </form >
     <main>
       <aside>
         <li><button>all</button></li>
@@ -33,11 +36,11 @@
       </aside>
       <section>
         <ul>
-          <li>
-            <p>
+          <li class="fact">
+            <p >
               React is being developed by Meta (formerly facebook)
               <a href="https://opensource.fb.com/" target="_blank">{Source}</a>
-              <span>#technology#</span> </p>
+              <span class="tag"><strong>#technology#</strong></span> </p>
             </p>
 
             <div>
@@ -46,8 +49,8 @@
               <button>⛔️ <strong>4</strong></button>
             </div>
           </li>
-          <li>
-            <p>
+          <li class="fact">
+            <p >
               Millennial dads spend 3 times as much time with their kids than
               their fathers spent with them. In 1982, 43% of fathers had never
               changed a diaper. Today, that number is down to 3%
@@ -56,7 +59,7 @@
                 target="_blank"
                 >{Source}</a
               >
-              <span>society</span>
+              <span class="tag"><strong>#society#</strong></span>
             </p>
             <div>
               <button>👍 <strong>11</strong></button>
@@ -65,6 +68,7 @@
             </div>
           </li>
         </ul>
+        <p>Build by @Surachman 2024</p>
       </section>
     </main>
   </body>
