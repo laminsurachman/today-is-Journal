@@ -1,5 +1,5 @@
 import "./style.css";
-
+import { useState } from "react";
 const initialFacts = [
   {
     id: 1,
@@ -33,7 +33,23 @@ const initialFacts = [
     createdIn: 2015,
   },
 ];
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <span style={{ fontSize: "30px" }}>{count}</span>
+      <button className="btn btn-large" onClick={() => setCount((c) => c + 1)}>
+        {" "}
+        +1{" "}
+      </button>
+    </div>
+  );
+}
 function App() {
+  // use state static variabel
+  const [showForm, setShowForm] = useState(false);
+
+  const appTitle = "Today I Learned";
   return (
     <>
       <header className="header">
@@ -44,12 +60,20 @@ function App() {
             width="68"
             alt="Today I Learned Logo"
           />
-          <h1>Today I Learned</h1>
+          <h1>{appTitle}</h1>
         </div>
 
-        <button className="btn btn-large btn-open">Share a fact</button>
+        <button
+          className="btn btn-large btn-open"
+          // update state variabel
+          onClick={() => setShowForm((show) => !show)}
+        >
+          Share a fact
+        </button>
       </header>
-      <NewFactForm />
+      {/* use state variabel */}
+      {showForm ? <NewFactForm /> : null}
+
       <main className="main">
         {" "}
         <CategoryFilter />
