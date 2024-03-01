@@ -35,6 +35,7 @@ const initialFacts = [
 ];
 function Counter() {
   const [count, setCount] = useState(0);
+
   return (
     <div>
       <span style={{ fontSize: "30px" }}>{count}</span>
@@ -48,17 +49,19 @@ function Counter() {
 function App() {
   // use state static variabel
   const [showForm, setShowForm] = useState(false);
-
+  const [facts, setFacts] = useState(initialFacts);
   return (
     <>
       <Header showForm={showForm} setShowForm={setShowForm} />
       {/* use state variabel */}
-      {showForm ? <NewFactForm /> : null}
+      {showForm ? (
+        <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
+      ) : null}
 
       <main className="main">
         {" "}
         <CategoryFilter />
-        <FactList />
+        <FactList facts={facts} />
       </main>
     </>
   );
@@ -92,15 +95,51 @@ const CATEGORIES = [
   { name: "history", color: "#f97316" },
   { name: "news", color: "#8b5cf6" },
 ];
-function NewFactForm() {
+function isValidHttpUrl(string) {
+  let url;
+  try {
+    url = new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+  return url.protocol === "http" || url.protocol === "https:";
+}
+function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState("");
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState("http://example.com");
   const [category, setCategory] = useState("");
   const textLength = text.length;
 
   function handleSubmit(e) {
+    // 1.Prevent browser reload
     e.preventDefault();
     console.log(text, source, category);
+
+    // 2.check data is valid if so create new fact
+    if (text && isValidHttpUrl(source) && category && textLength <= 200) {
+      //3.create anew fact object
+      const newFact = {
+        id: Math.round(Math.random() * 10000000),
+        text,
+        source,
+        category,
+        votesInteresting: 0,
+        votesMindblowing: 0,
+        votesFalse: 0,
+        createdIn: new Date().getFullYear(),
+      };
+      //4.add anew fact new UI
+      setFacts((facts) => [newFact, ...facts]);
+
+      //5.reset input text
+      setText("");
+      setSource("http://example.com");
+      setCategory("");
+
+      //close the form
+      setShowForm(false);
+    }
   }
   return (
     <form className="fact-form" onSubmit={handleSubmit}>
@@ -154,8 +193,7 @@ function CategoryFilter() {
   );
 }
 
-function FactList() {
-  const facts = initialFacts;
+function FactList({ facts }) {
   return (
     <section>
       <ul className="facts-list">
@@ -163,6 +201,7 @@ function FactList() {
           <Fact key={fact.id} fact={fact} />
         ))}
       </ul>
+      <p>There are {facts.length} facts in database. add your Own!</p>
     </section>
   );
 }
